@@ -10,4 +10,22 @@ public class CreateTopicMsg extends Message {
 	
 	// Constructor, get/set-methods, and toString method
     // as described in the project text	
+	
+	public CreateTopicMsg(String user, String topic) {
+		super(MessageType.CREATETOPIC,user);
+		this.topic = topic;
+	}
+	
+	public String getTopic() {
+		return topic;
+	}
+	
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+	
+	public String toString() {
+		return super.toString() + "create topic: " + this.topic;
+	}
 }
+
