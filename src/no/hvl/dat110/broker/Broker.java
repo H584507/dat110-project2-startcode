@@ -13,7 +13,6 @@ public class Broker extends Stopable {
 	
 	private boolean stopable = false;
 	private int maxaccept = 0;
-	//jajaja jaaaaaaa
 	private MessagingServer server;
 	private Dispatcher dispatcher;
 		

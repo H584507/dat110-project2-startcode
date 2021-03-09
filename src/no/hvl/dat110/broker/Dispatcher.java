@@ -112,8 +112,9 @@ public class Dispatcher extends Stopable {
 
 		// TODO: create the topic in the broker storage
 		// the topic is contained in the create topic message
+		String topic = msg.getTopic();
 
-		throw new UnsupportedOperationException(TODO.method());
+		storage.createTopic(topic);
 
 	}
 
@@ -123,8 +124,9 @@ public class Dispatcher extends Stopable {
 
 		// TODO: delete the topic from the broker storage
 		// the topic is contained in the delete topic message
-		
-		throw new UnsupportedOperationException(TODO.method());
+		String topic = msg.getTopic();
+
+		storage.deleteTopic(topic);
 	}
 
 	public void onSubscribe(SubscribeMsg msg) {
@@ -133,8 +135,11 @@ public class Dispatcher extends Stopable {
 
 		// TODO: subscribe user to the topic
 		// user and topic is contained in the subscribe message
-		
-		throw new UnsupportedOperationException(TODO.method());
+
+		String user = msg.getUser();
+		String topic = msg.getTopic();
+
+		storage.addSubscriber(user, topic);
 
 	}
 
@@ -144,8 +149,10 @@ public class Dispatcher extends Stopable {
 
 		// TODO: unsubscribe user to the topic
 		// user and topic is contained in the unsubscribe message
-		
-		throw new UnsupportedOperationException(TODO.method());
+		String user = msg.getUser();
+		String topic = msg.getTopic();
+
+		storage.removeSubscriber(user, topic);
 	}
 
 	public void onPublish(PublishMsg msg) {
@@ -153,10 +160,17 @@ public class Dispatcher extends Stopable {
 		Logger.log("onPublish:" + msg.toString());
 
 		// TODO: publish the message to clients subscribed to the topic
-		// topic and message is contained in the subscribe message
+		// topic and message is contained in the publish message
 		// messages must be sent used the corresponding client session objects
 		
-		throw new UnsupportedOperationException(TODO.method());
+		String topic = msg.getTopic();
 
+		Set<String> subscribers = storage.getSubscribers(topic);
+
+		for (String subscriber : subscribers) {
+			if (storage.getSession(subscriber) != null) {
+				storage.getSession(subscriber).send(msg);
+			}
+		}
 	}
 }
