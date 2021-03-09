@@ -6,6 +6,7 @@ public class CreateTopicMsg extends Message {
 	
 	// TODO: 
 	// Implement object variables - a topic is required
+	private String topic;
 	
 	// Constructor, get/set-methods, and toString method
     // as described in the project text	
